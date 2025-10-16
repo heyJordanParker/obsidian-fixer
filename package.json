@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-wysiwyg-plugin",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Notion-like WYSIWYG editor for Obsidian",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
@@ -11,14 +11,27 @@
 	"keywords": [],
 	"author": "",
 	"license": "MIT",
+	"dependencies": {
+		"@tiptap/core": "^2.1.13",
+		"@tiptap/extension-image": "^2.1.13",
+		"@tiptap/extension-link": "^2.1.13",
+		"@tiptap/extension-placeholder": "^2.1.13",
+		"@tiptap/pm": "^2.1.13",
+		"@tiptap/starter-kit": "^2.1.13",
+		"@tiptap/suggestion": "^2.1.13",
+		"gray-matter": "^4.0.3",
+		"monkey-around": "^3.0.0",
+		"tippy.js": "^6.3.7",
+		"tiptap-markdown": "^0.8.2"
+	},
 	"devDependencies": {
-		"@types/node": "^16.11.6",
+		"@types/node": "^20.10.0",
 		"@typescript-eslint/eslint-plugin": "5.29.0",
 		"@typescript-eslint/parser": "5.29.0",
 		"builtin-modules": "3.3.0",
 		"esbuild": "0.17.3",
 		"obsidian": "latest",
 		"tslib": "2.4.0",
-		"typescript": "4.7.4"
+		"typescript": "^5.3.3"
 	}
 }
