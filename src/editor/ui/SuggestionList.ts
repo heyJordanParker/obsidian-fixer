@@ -23,6 +23,8 @@ export class SuggestionList {
       trigger: 'manual',
       placement: 'bottom-start',
       maxWidth: 300,
+      theme: 'wysiwyg',
+      arrow: false,
     });
   }
 

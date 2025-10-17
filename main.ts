@@ -14,10 +14,66 @@ export default class WYSIWYGPlugin extends Plugin {
       (leaf) => new WYSIWYGView(leaf, this)
     );
 
+    // Register keyboard shortcuts as commands
+    this.registerCommands();
+
     // Monkey patch WorkspaceLeaf.setViewState to intercept markdown view creation
     this.registerMonkeyPatches();
 
     this._loaded = true;
+  }
+
+  private registerCommands() {
+    // Bold
+    this.addCommand({
+      id: 'toggle-bold',
+      name: 'Toggle bold',
+      hotkeys: [{ modifiers: ['Mod'], key: 'b' }],
+      checkCallback: (checking: boolean) => {
+        const view = this.app.workspace.getActiveViewOfType(WYSIWYGView);
+        if (view?.editor) {
+          if (!checking) {
+            view.editor.commands.toggleBold();
+          }
+          return true;
+        }
+        return false;
+      },
+    });
+
+    // Italic
+    this.addCommand({
+      id: 'toggle-italic',
+      name: 'Toggle italic',
+      hotkeys: [{ modifiers: ['Mod'], key: 'i' }],
+      checkCallback: (checking: boolean) => {
+        const view = this.app.workspace.getActiveViewOfType(WYSIWYGView);
+        if (view?.editor) {
+          if (!checking) {
+            view.editor.commands.toggleItalic();
+          }
+          return true;
+        }
+        return false;
+      },
+    });
+
+    // Strikethrough
+    this.addCommand({
+      id: 'toggle-strikethrough',
+      name: 'Toggle strikethrough',
+      hotkeys: [{ modifiers: ['Mod', 'Shift'], key: 'x' }],
+      checkCallback: (checking: boolean) => {
+        const view = this.app.workspace.getActiveViewOfType(WYSIWYGView);
+        if (view?.editor) {
+          if (!checking) {
+            view.editor.commands.toggleStrike();
+          }
+          return true;
+        }
+        return false;
+      },
+    });
   }
 
   private registerMonkeyPatches() {

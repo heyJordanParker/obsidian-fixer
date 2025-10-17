@@ -161,14 +161,14 @@
 /* Wikilinks */
 .internal-link {
   color: var(--link-color);
-  text-decoration: none;
+  text-decoration: none !important;
   cursor: pointer;
-  border-bottom: 1px solid var(--link-color);
 }
 
 .internal-link:hover {
   color: var(--link-color-hover);
-  border-bottom-color: var(--link-color-hover);
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--link-color-hover);
 }
 
 /* Mentions */
@@ -187,10 +187,6 @@
 
 /* Suggestion List */
 .suggestion-list {
-  background: var(--background-primary);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 4px;
   max-height: 300px;
   overflow-y: auto;
@@ -228,6 +224,23 @@
   background: transparent;
 }
 
+/* Blockquotes */
+.wysiwyg-editor blockquote,
+.ProseMirror blockquote {
+  border-left: 4px solid var(--text-accent);
+  padding-left: 16px;
+  margin: 12px 0;
+  color: var(--text-normal);
+  font-style: normal;
+}
+
+/* Ensure blockquote content isn't italic */
+.wysiwyg-editor blockquote p,
+.ProseMirror blockquote p {
+  font-style: normal;
+  margin: 0;
+}
+
 /* Code Blocks */
 .wysiwyg-editor pre {
   background: var(--code-background);
@@ -253,11 +266,22 @@
 }
 
 /* Tippy.js tooltip styling */
-.tippy-box {
-  background-color: var(--background-primary);
+.tippy-box[data-theme~='wysiwyg'] {
+  background: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-s);
 }
 
-.tippy-arrow {
-  color: var(--background-primary);
+.tippy-box[data-theme~='wysiwyg'] .tippy-content {
+  padding: 0;
+}
+
+.tippy-box[data-theme~='wysiwyg'] .tippy-arrow {
+  color: var(--background-modifier-border);
+}
+
+/* Ensure tippy doesn't affect editor layout */
+.tippy-box {
+  z-index: 1000;
 }

@@ -10,6 +10,7 @@ import { FileMention } from './extensions/FileMention';
 import { PasteHandler } from './extensions/PasteHandler';
 import { CodeBlockExtension } from './extensions/CodeBlock';
 import { SlashCommands } from './extensions/SlashCommands';
+import { CustomStrike } from './extensions/CustomStrike';
 import { PropertiesPanel } from './ui/PropertiesPanel';
 import type WYSIWYGPlugin from '../../main';
 
@@ -65,12 +66,14 @@ export class WYSIWYGView extends TextFileView {
       editable: true,
       extensions: [
         StarterKit.configure({
-          // Disable default code block, we'll use custom
+          // Disable default code block and strike - we'll use custom versions
           codeBlock: false,
+          strike: false,
           // Explicitly ensure bold and italic are enabled
           bold: {},
           italic: {},
         }),
+        CustomStrike,
         Link.configure({
           openOnClick: false,
           HTMLAttributes: {
@@ -169,16 +172,16 @@ export class WYSIWYGView extends TextFileView {
       this.propertiesPanel.update(this.frontMatter);
     }
 
-    // Load content into editor
-    this.editor.commands.setContent(markdownContent);
+    // Load content into editor without adding to history
+    // This prevents undo from clearing the entire document
+    this.editor.commands.setContent(markdownContent, false);
     console.log('onLoadFile: content loaded into editor');
   }
 
   async onUnloadFile(file: TFile): Promise<void> {
-    // Save before unloading
-    if (this.editor && file) {
-      await this.save();
-    }
+    // Save before unloading (switching files)
+    console.log('onUnloadFile: saving before unload');
+    await this.saveToFile();
   }
 
   getViewData(): string {
@@ -232,7 +235,7 @@ export class WYSIWYGView extends TextFileView {
       if (this.propertiesPanel) {
         this.propertiesPanel.update(this.frontMatter);
       }
-      this.editor.commands.setContent(content);
+      this.editor.commands.setContent(content, false);
       console.log('setViewData: content set');
     }
   }
