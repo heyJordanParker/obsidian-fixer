@@ -35,13 +35,19 @@ export class SuggestionList {
     }
 
     this.element.innerHTML = items
-      .map((item: any, index: number) => `
-        <div class="suggestion-item ${index === this.selectedIndex ? 'selected' : ''}"
-             data-index="${index}">
-          <span class="suggestion-icon">📄</span>
-          <span class="suggestion-label">${item.label}</span>
-        </div>
-      `)
+      .map((item: any, index: number) => {
+        // Support both file mentions (with label) and commands (with title)
+        const label = item.label || item.title || 'Unknown';
+        const icon = item.icon || '📄';
+
+        return `
+          <div class="suggestion-item ${index === this.selectedIndex ? 'selected' : ''}"
+               data-index="${index}">
+            <span class="suggestion-icon">${icon}</span>
+            <span class="suggestion-label">${label}</span>
+          </div>
+        `;
+      })
       .join('');
 
     // Add click handlers

@@ -2,56 +2,72 @@
 .wysiwyg-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 100%;
-  padding: 20px;
+  padding: 40px 20px;
   overflow-y: auto;
+}
+
+/* Page wrapper with max-width */
+.wysiwyg-container > * {
+  width: 100%;
+  max-width: 80ch;
 }
 
 /* Properties Panel */
 .properties-container {
-  margin-bottom: 20px;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 8px;
-  background: var(--background-secondary);
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--background-modifier-border);
 }
 
 .properties-header {
   display: flex;
   align-items: center;
-  padding: 8px 12px;
+  padding: 4px 0;
   cursor: pointer;
   user-select: none;
+  opacity: 0.6;
+}
+
+.properties-header:hover {
+  opacity: 1;
 }
 
 .properties-toggle {
-  margin-right: 8px;
-  font-size: 12px;
+  margin-right: 6px;
+  font-size: 10px;
+  color: var(--text-muted);
 }
 
 .properties-title {
   flex: 1;
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 500;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .properties-add-btn {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
+  color: var(--text-muted);
 }
 
 .properties-add-btn:hover {
   background: var(--background-modifier-hover);
+  color: var(--text-normal);
 }
 
 .properties-content {
-  padding: 8px 12px;
-  border-top: 1px solid var(--background-modifier-border);
+  padding: 8px 0 0 0;
 }
 
 .property-row {
@@ -63,32 +79,45 @@
 
 .property-key,
 .property-value {
-  padding: 4px 8px;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: 4px;
-  background: var(--background-primary);
+  padding: 4px 6px;
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: transparent;
   font-size: 13px;
 }
 
+.property-key:focus,
+.property-value:focus {
+  outline: none;
+  border-bottom-color: var(--text-accent);
+}
+
 .property-key {
-  flex: 0 0 150px;
+  flex: 0 0 140px;
   font-weight: 500;
+  color: var(--text-muted);
 }
 
 .property-value {
   flex: 1;
+  color: var(--text-normal);
 }
 
 .property-delete {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-radius: 4px;
-  font-size: 18px;
-  color: var(--text-muted);
+  border-radius: 3px;
+  font-size: 16px;
+  color: var(--text-faint);
+  opacity: 0;
+}
+
+.property-row:hover .property-delete {
+  opacity: 1;
 }
 
 .property-delete:hover {
@@ -97,16 +126,15 @@
 }
 
 .properties-empty {
-  padding: 12px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
+  padding: 8px 0;
+  color: var(--text-faint);
+  font-size: 12px;
 }
 
 /* Editor */
 .editor-container {
   flex: 1;
-  overflow-y: auto;
+  width: 100%;
 }
 
 .wysiwyg-editor {
@@ -114,11 +142,12 @@
   outline: none;
   font-size: 16px;
   line-height: 1.6;
+  width: 100%;
 }
 
 .wysiwyg-editor .ProseMirror {
   outline: none;
-  padding: 12px;
+  padding: 0;
 }
 
 .wysiwyg-editor .ProseMirror p.is-editor-empty:first-child::before {

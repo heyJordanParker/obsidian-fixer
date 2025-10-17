@@ -22,12 +22,18 @@ export class PropertiesPanel {
     // Create toggle header
     const header = this.container.createDiv('properties-header');
 
-    const toggle = header.createSpan('properties-toggle');
-    toggle.setText(this.isExpanded ? '▼' : '▶');
-    toggle.addEventListener('click', () => {
+    // Make entire header clickable for expand/collapse
+    header.addEventListener('click', (e) => {
+      // Don't toggle if clicking the add button
+      if ((e.target as HTMLElement).closest('.properties-add-btn')) {
+        return;
+      }
       this.isExpanded = !this.isExpanded;
       this.render();
     });
+
+    const toggle = header.createSpan('properties-toggle');
+    toggle.setText(this.isExpanded ? '▼' : '▶');
 
     const title = header.createSpan('properties-title');
     const count = Object.keys(this.properties).length;
@@ -41,13 +47,10 @@ export class PropertiesPanel {
       this.addProperty();
     });
 
-    // Create content area
-    if (this.isExpanded || count > 0) {
+    // Create content area - always render if expanded
+    if (this.isExpanded) {
       this.contentEl = this.container.createDiv('properties-content');
-
-      if (this.isExpanded) {
-        this.renderProperties();
-      }
+      this.renderProperties();
     }
   }
 
