@@ -16,6 +16,7 @@ import { CustomBulletList } from './extensions/CustomBulletList';
 import { CustomTaskList } from './extensions/CustomTaskList';
 import { CustomTaskItem } from './extensions/CustomTaskItem';
 import { CustomBlockquote } from './extensions/CustomBlockquote';
+import { CustomHardBreak } from './extensions/CustomHardBreak';
 import { PropertiesPanel } from './ui/PropertiesPanel';
 import type WYSIWYGPlugin from '../../main';
 import * as Diff from 'diff';
@@ -28,7 +29,7 @@ export const WYSIWYG_VIEW_TYPE = 'wysiwyg-view';
 export class WYSIWYGView extends TextFileView {
   editor: Editor | null = null;
   plugin: WYSIWYGPlugin;
-  editorContainer: HTMLElement | null = null;
+  editorContainer!: HTMLElement;
   propertiesPanel: PropertiesPanel | null = null;
   frontMatter: Record<string, any> = {};
   private saveTimeout: NodeJS.Timeout | null = null;
@@ -89,11 +90,13 @@ export class WYSIWYGView extends TextFileView {
           strike: false,
           bulletList: false,
           blockquote: false,
+          hardBreak: false,
           bold: {},
           italic: {},
         }),
         CustomStrike,
         Underline,
+        CustomHardBreak,
         CustomBlockquote,
         CustomTaskList,
         CustomTaskItem.configure({
@@ -126,6 +129,7 @@ export class WYSIWYGView extends TextFileView {
           html: true,
           transformPastedText: true,
           transformCopiedText: true,
+          breaks: true,
         }),
         CodeBlockExtension,
         SlashCommands,
