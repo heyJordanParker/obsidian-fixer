@@ -74,6 +74,74 @@ export default class WYSIWYGPlugin extends Plugin {
         return false;
       },
     });
+
+    // Toggle task list - [] shortcut
+    this.addCommand({
+      id: 'toggle-task-list',
+      name: 'Toggle task list',
+      hotkeys: [{ modifiers: ['Mod', 'Shift'], key: '[' }],
+      checkCallback: (checking: boolean) => {
+        const view = this.app.workspace.getActiveViewOfType(WYSIWYGView);
+        if (view?.editor) {
+          if (!checking) {
+            view.editor.commands.toggleTaskList();
+          }
+          return true;
+        }
+        return false;
+      },
+    });
+
+    // Underline
+    this.addCommand({
+      id: 'toggle-underline',
+      name: 'Toggle underline',
+      hotkeys: [{ modifiers: ['Mod'], key: 'u' }],
+      checkCallback: (checking: boolean) => {
+        const view = this.app.workspace.getActiveViewOfType(WYSIWYGView);
+        if (view?.editor) {
+          if (!checking) {
+            view.editor.commands.toggleUnderline();
+          }
+          return true;
+        }
+        return false;
+      },
+    });
+
+    // Insert/edit link
+    this.addCommand({
+      id: 'insert-link',
+      name: 'Insert link',
+      hotkeys: [{ modifiers: ['Mod'], key: 'k' }],
+      checkCallback: (checking: boolean) => {
+        const view = this.app.workspace.getActiveViewOfType(WYSIWYGView);
+        if (view?.editor) {
+          if (!checking) {
+            const { from, to } = view.editor.state.selection;
+            const text = view.editor.state.doc.textBetween(from, to);
+
+            // Get existing link if cursor is in one
+            const link = view.editor.getAttributes('link');
+            const currentUrl = link.href || '';
+
+            // Prompt for URL
+            const url = prompt('Enter URL:', currentUrl);
+            if (url !== null) {
+              if (url === '') {
+                // Remove link if URL is empty
+                view.editor.commands.unsetLink();
+              } else {
+                // Set link
+                view.editor.commands.setLink({ href: url });
+              }
+            }
+          }
+          return true;
+        }
+        return false;
+      },
+    });
   }
 
   private registerMonkeyPatches() {

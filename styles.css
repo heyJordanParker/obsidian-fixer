@@ -241,6 +241,58 @@
   margin: 0;
 }
 
+/* Task Lists */
+.wysiwyg-editor ul[data-type="taskList"],
+.ProseMirror ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+/* Task items - use multiple selectors to catch all cases */
+.wysiwyg-editor li[data-type="taskItem"],
+.wysiwyg-editor ul[data-type="taskList"] > li,
+.ProseMirror li[data-type="taskItem"],
+.ProseMirror ul[data-type="taskList"] > li {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.wysiwyg-editor li[data-type="taskItem"] > label,
+.wysiwyg-editor ul[data-type="taskList"] > li > label,
+.ProseMirror li[data-type="taskItem"] > label,
+.ProseMirror ul[data-type="taskList"] > li > label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+.wysiwyg-editor li[data-type="taskItem"] > div,
+.wysiwyg-editor ul[data-type="taskList"] > li > div,
+.ProseMirror li[data-type="taskItem"] > div,
+.ProseMirror ul[data-type="taskList"] > li > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.wysiwyg-editor li[data-type="taskItem"] > div > p,
+.wysiwyg-editor ul[data-type="taskList"] > li > div > p,
+.ProseMirror li[data-type="taskItem"] > div > p,
+.ProseMirror ul[data-type="taskList"] > li > div > p {
+  margin: 0;
+}
+
+.wysiwyg-editor input[type="checkbox"],
+.ProseMirror input[type="checkbox"] {
+  margin: 0;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
 /* Code Blocks */
 .wysiwyg-editor pre {
   background: var(--code-background);
